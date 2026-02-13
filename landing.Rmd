@@ -1,0 +1,18 @@
+---
+name: "."
+title: "GV300"
+image: "tobi.jpg"
+links:
+  - label: LinkedIn
+    url: "https://linkedin.com/"
+  - label: Twitter
+    url: "https://twitter.com/"
+  - label: GitHub
+    url: "https://github.com/"
+  - label: Email
+    url: "mailto:email@email.com"
+output:
+  postcards::jolla
+---
+ 
+I am an undergraduate linguistics student with a keen interest in data and statistical analysis.
