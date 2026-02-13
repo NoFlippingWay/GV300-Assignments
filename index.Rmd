@@ -1,7 +1,6 @@
 ---
 name: "."
-title: "GV300"
-image: "tobi.jpg"
+title: "Holly Lloyd"
 site: distill::distill_website
 links:
   - label: LinkedIn
@@ -16,4 +15,4 @@ output:
   postcards::jolla
 ---
  
-I am an undergraduate linguistics student with a keen interest in data and statistical analysis. I really enjoy R.
+I am an undergraduate linguistics student with a keen interest in data and statistical analysis.
