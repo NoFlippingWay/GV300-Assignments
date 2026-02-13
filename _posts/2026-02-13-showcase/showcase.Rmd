@@ -27,7 +27,7 @@ library(broom)
 
 # Overview
 
-In this assignment, I will work with a simulated A/B test run by a fictitious **political party** delivering messages on its official website.
+In this showcase, I will work with a simulated A/B test run by a fictitious **political party** delivering messages on its official website.
 
 The party wants to increase the probability that visitors **sign up as supporters**. 
 
