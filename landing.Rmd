@@ -15,4 +15,4 @@ output:
   postcards::jolla
 ---
  
-I am an undergraduate linguistics student with a keen interest in data and statistical analysis.
+I am an undergraduate linguistics student with a keen interest in data and statistical analysis. I really enjoy R.
