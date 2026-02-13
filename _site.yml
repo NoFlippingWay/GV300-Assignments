@@ -9,6 +9,6 @@ navbar:
       href: index.html
     - text: "About"
       href: about.html
-    - text: "Landing"
-      href: landing.html
+    - text: "Showcases"
+      href: blog.html
 output: distill::distill_article

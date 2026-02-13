@@ -1,18 +1,19 @@
 ---
-title: "GV300 "
-description: |
-  Welcome to the website. I hope you enjoy it!
+name: "."
+title: "GV300"
+image: "tobi.jpg"
 site: distill::distill_website
+links:
+  - label: LinkedIn
+    url: "https://linkedin.com/"
+  - label: Twitter
+    url: "https://twitter.com/"
+  - label: GitHub
+    url: "https://github.com/"
+  - label: Email
+    url: "mailto:email@email.com"
+output:
+  postcards::jolla
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-
-# Learn more about creating websites with Distill at:
-# https://rstudio.github.io/distill/website.html
-
-# Learn more about publishing to GitHub Pages at:
-# https://rstudio.github.io/distill/publish_website.html#github-pages
-
-```
-
+ 
+I am an undergraduate linguistics student with a keen interest in data and statistical analysis. I really enjoy R.
