@@ -1,0 +1,265 @@
+---
+title: "Global Negation Strategies: A Comparative Analysis"
+description: |
+  An  investigation into the distribution of negation strategies using Grambank and WALS datasets.
+author:
+  - name: Holly Lloyd
+date : 2026-03-27
+output:
+  distill::distill_article:
+    toc: true
+    toc_depth: 2
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+
+#install.packages("scales")
+library(knitr)
+library(scales)
+library(patchwork)
+library(sf)
+library(tidyverse)
+library(ggplot2)
+library(broom)
+# Loading in packages
+
+Gb_values <- read.csv("values.csv")
+Gb_languages <- read.csv("languages.csv")
+Gb_parameters <- read.csv("parameters.csv")
+wals_values <- read.csv("WALSvalues.csv")
+wals_languages <- read.csv("WALSlanguages.csv")
+# Loading data 
+```
+# Section 1: Grambank Areal and Genealogical Distribution
+
+The following analysis examines whether negation strategies are primarily driven by geographic proximity (areal diffusion) or family lineage (genealogical inheritance). I focus on two key features GB107 (affixal/clitic negation) and GB137 (clause-final negation).
+
+# 1.1 Chi-Squared Tests for Areal Effect
+
+In order to evaluate the areal diffusion, I utilised Pearson's Chi-squared tests. These tests enable me to determine whether the presence of a negation strategy is significantly associated with specific geographic macroareas. 
+
+```{r}
+negation_params <- Gb_parameters[Gb_parameters $ ID %in% c("GB107", "GB137"),]
+Gb_negation_values <- Gb_values[Gb_values $ Parameter_ID %in% c("GB107", "GB137"),]
+# Filtering for specific parameters
+
+Gb_negations <- merge(Gb_negation_values, Gb_languages,
+                      by.x = "Language_ID", by.y = "ID")
+# Integrating values with metadata
+
+Gb_wide <- reshape(Gb_negations[, c("Language_ID", "Parameter_ID", "Value",
+                                    "Family_name", "Macroarea", "Longitude", "Latitude")],
+                   idvar = c("Language_ID", "Longitude", "Latitude"),
+                   timevar = "Parameter_ID",
+                   direction = "wide")
+# Reshaping to wide and specifying column names
+
+areal_table <- table(Gb_wide $ Value.GB137, Gb_wide  $ Macroarea.GB137)
+areal_table_chi <- chisq.test(areal_table)
+tidy(areal_table_chi) %>%
+  mutate(p.value = scales::scientific(p.value)) %>%
+  knitr::kable(caption = "Areal Association: GB137",
+               col.names = c("Statistic", "P-Value", "DF", "Method"))
+
+areal_table2 <- table(Gb_wide $ Value.GB107, Gb_wide  $ Macroarea.GB107)
+areal_table_chi2 <- chisq.test(areal_table2)
+tidy(areal_table_chi2) %>%
+  mutate(p.value = scales::scientific(p.value)) %>%
+  knitr::kable(caption = "Areal Association: GB107",
+               col.names = c("Statistic", "P-Value", "DF", "Method"))
+# Chi-squared to evaluation associations
+```
+# 1.2 Genealogical Stability
+
+While areal factors are significant, many language families exhibit vertical stability. I defined this demonstration of strong inheritance as a language family with 100% internal consistency for the analysed features. 
+
+```{r}
+family_table <- table(Gb_wide $ Value.GB137, Gb_wide $ Family_name.GB137)
+family_props <- prop.table(family_table, margin = 2)
+
+strong_inheritance <- family_props["1", family_props["1", ] == 1.0]
+as.data.frame(head(strong_inheritance)) %>%
+  knitr::kable(caption = "Strong Inheritance Families: GB137")
+
+family_table2 <- table(Gb_wide $ Value.GB107, Gb_wide $ Family_name.GB107)
+family_props2 <- prop.table(family_table2, margin = 2)
+
+strong_inheritance2 <- family_props2["1", family_props2["1", ] == 1.0]
+as.data.frame(head(strong_inheritance2)) %>%
+  knitr::kable(caption = "Strong Inheritance Families: GB107")
+# Investigating genealogical stability
+
+feature_comp <- table(Gb_wide $ Value.GB107, Gb_wide $ Value.GB137)
+feature_test <- chisq.test(feature_comp, simulate.p.value = TRUE)
+tidy(feature_test) %>%
+  knitr::kable(caption = "Correlation Test: GB137 vs. GB107" )
+# Testing for correlation between features
+```
+
+```{r}
+plotGB137 <- na.omit(Gb_wide[, c("Macroarea.GB137", "Value.GB137")])
+plotGB137 <- plotGB137[plotGB137 $ Value.GB137 %in% c("0", "1"),]
+#Preparing data for GB137 plot
+
+p1 <- ggplot(plotGB137, aes(x = Macroarea.GB137, fill = as.factor(Value.GB137))) +
+  geom_bar(position = "fill", width = 0.7) +
+  scale_y_continuous(labels = percent) +
+  scale_fill_manual(values = c("#56B4E9", "#0072B2"),
+                    labels = c("Absent", "Present")) +
+  labs(title = "Clause-Final Negation (GB137)",
+       subtitle = "Syntactic Position: High regional variation suggests areal diffusion",
+       y = "Percent of Languages", x = NULL, fill = "Presence") +
+  theme_minimal(base_size = 11) +
+  theme(legend.title = element_blank()) +
+  coord_flip()
+# Creating GB137 plot
+
+plotGB107 <- na.omit(Gb_wide[, c("Macroarea.GB107", "Value.GB107")])
+plotGB107 <- plotGB107[plotGB107 $ Value.GB107 %in% c("0", "1"),]
+# Preparing data for GB107 plot
+
+p2 <- ggplot(plotGB107, aes(x = Macroarea.GB107, fill = as.factor(Value.GB107))) +
+  geom_bar(position = "fill", width = 0.7) +
+  scale_y_continuous(labels = percent) +
+  scale_fill_manual(values = c("#E69F00", "#D55E00"),
+                    labels = c("Absent", "Present")) +
+  labs(title = "Affixal/Clitic Negation (GB107)",
+       subtitle = "Morphological Strategy: Broader distribution suggests genealogical stability",
+       y = "Percent of Languages", x = NULL, fill = "Presence") +
+  theme_minimal(base_size = 11) +
+  theme(legend.title = element_blank()) +
+  coord_flip()
+# Creating GB107 plot
+
+combined_plot <- p1 / p2 +
+  plot_annotation(title = "Comparative Analysis of Negation Strategies",
+                  caption = "Data: Grambank 2026") +
+  plot_layout(guides = "collect")
+combined_plot
+# Combining plots using patchwork
+```
+# Section 2: WALS Structural Correlation
+
+In contrast to the binary granularity of Grambank, the WALS dataset allows for the investigation into hte dependency between clausal symmetry (113A) and syntactic Position (143G).
+
+```{r}
+wals_full <- merge(wals_values, wals_languages,
+                   by.x = "Language_ID", by.y = "ID")
+# Integrating WALS values with metadata
+
+wals_113a <- wals_full[wals_full $ Parameter_ID == "113A", ]
+wals_143g <- wals_full[wals_full $ Parameter_ID == "143G", ]
+# Filtering for relevant parameters
+
+wals_areal_table <- table(wals_113a $ Value, wals_113a $ Macroarea)
+wals_chi <- chisq.test(wals_areal_table, simulate.p.value = TRUE)
+tidy(wals_chi) %>%
+  knitr::kable(caption = "Areal Association: 113A vs. Macroarea", 
+col.names = c("Statistic", "P-Value", "DF", "Method"))
+
+wals_areal_table2 <- table(wals_143g $ Value, wals_143g $ Macroarea)
+wals_chi2 <- chisq.test(wals_areal_table2, simulate.p.value = TRUE)
+tidy(wals_chi2) %>%
+  knitr::kable(caption = "Areal Association: 1143G vs. Macroarea", 
+col.names = c("Statistic", "P-Value", "DF", "Method"))
+# Chi-squared for WALS features
+
+wals_subset <- wals_full[wals_full $ Parameter_ID %in% c("113A", "143G"), ]
+wals_wide <- reshape(wals_subset[, c("Language_ID", "Parameter_ID", "Value",
+                                     "Family", "Macroarea")],
+                     idvar = "Language_ID",
+                     timevar = "Parameter_ID",
+                     direction = "wide")
+# Reshaping subset for correlation testing
+
+wals_wide_clean <- na.omit(wals_wide[, c("Value.113A", "Value.143G")])
+wals_wide_clean <- droplevels(wals_wide_clean)
+# Cleaning data 
+```
+# 2.1 Strategy vs. Word Order
+
+The contingency table below maps the frequency of specific strategy-order pairings. A significant chi-squared result suggests that certain syntactic positions favor more complex grammatical pathways.
+
+```{r}
+combined_wals_table <- table(wals_wide_clean $Value.113A, wals_wide_clean $ Value.143G)
+# Creating contingency table
+
+wals_corr <- chisq.test(combined_wals_table, simulate.p.value = TRUE)
+# Performing Chi-squared
+```
+
+```{r}
+knitr::kable(combined_wals_table,
+             caption = "Contingency Table: WALS 113A vs WALS 143G")
+# Displaying table
+
+tidy(wals_corr) %>%
+  knitr::kable(
+    caption = "Chi-squared Test Results: Correlation between Strategy and Order",
+    col.names = c("Statistic", "P-Value", "DF", "Method"))
+# Displaying Chi-squared
+```
+
+```{r}
+wals_counts <- as.data.frame(table(wals_wide_clean $ Value.113A,
+                                   wals_wide_clean $ Value.143G))
+colnames(wals_counts) <- c("Strategy", "Order", "Frequency")
+# Preparing data for bar chart
+
+
+wals_counts $ Strategy <- factor(wals_counts $ Strategy,
+                                 labels = c("Symmetric", "Asymmetric", "Asymmetric (Auxiliary)"))
+wals_counts $ Order <- factor(wals_counts $ Order,
+                              labels = c("V-Neg", "Neg-V"))
+# Relabeling 
+
+ggplot(wals_counts, aes(x = Order, y = Frequency, fill = Strategy)) +
+  geom_bar(stat = "identity", position = "fill") +
+  scale_y_continuous(labels = percent) +
+  scale_fill_manual(values = c("#F0E442", "#E69F00", "#D55E00")) +
+  labs(title = "Distribution of Negation Strategies by Word Order",
+       subtitle = "Proportional analysis of WALS features 113A and 143G",
+       caption = "Data: WALS 2026", 
+       x = "Word Order (143G)", y = "Percentage of Languages", fill = "Strategy (113A)") +
+  theme_minimal()
+# Creating bar graph
+```
+
+```{r}
+world_map <- map_data("world")
+# retrieving map coordinates
+
+WALS_map <- ggplot() +
+  geom_polygon(data = world_map, aes(x = long, y = lat, group = group),
+               fill = "grey95", colour = "grey80", linewidth = 0.1) +
+  geom_point(data = wals_113a, aes(x = Longitude, y = Latitude,
+                                   colour = as.factor(Value)),
+             size = 0.8, alpha = 0.7) +
+  scale_colour_manual(values = c("#D55E00", "#E69F00", "#0072B2", "#56B4E9")) +
+  coord_fixed(1.3) +
+  theme_void() +
+  theme(legend.position = "none") +
+  labs(title = "WALS 113A: Symmetric and Asymmetric Negation")
+# Creating WALS 113A map
+
+Gb_map <- ggplot() +
+  geom_polygon(data = world_map, aes(x = long, y = lat, group = group),
+               fill = "grey95", colour = "grey80", linewidth = 0.1) +
+  geom_point(data = Gb_wide,
+             aes(x = Longitude, y = Latitude, colour = factor(Value.GB137,exclude = NULL)),
+             shape = 16, size = 0.8, alpha = 0.7) +
+  scale_shape_identity() +
+  scale_colour_manual(values = c("#CC79A7", "#009E73","#F0E442", "black"),
+                      na.value = "black",
+                      labels = c("No", "Yes", "Not Known", "NAs")) +
+  coord_fixed(1.3) +
+  theme_void() +
+  theme(legend.position = "none") +
+  labs(title = "Grambank GB137: Clause-Final Negation")
+# Creating Grambank GB137 map
+
+
+comp_map <- WALS_map / Gb_map 
+comp_map
+# Displaying maps with patchwork
+```

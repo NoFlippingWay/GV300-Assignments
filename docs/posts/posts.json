@@ -1,5 +1,22 @@
 [
   {
+    "path": "posts/2026-03-27/",
+    "title": "Global Negation Strategies: A Comparative Analysis",
+    "description": "An  investigation into the distribution of negation strategies using Grambank and WALS datasets.",
+    "author": [
+      {
+        "name": "Holly Lloyd",
+        "url": {}
+      }
+    ],
+    "date": "2026-03-27",
+    "categories": [],
+    "contents": "\r\n\r\nTable 1: Areal Association: GB137\r\nStatistic\r\nP-Value\r\nDF\r\nMethod\r\n103.7215\r\n9.78e-18\r\n10\r\nPearson’s Chi-squared test\r\nTable 1: Areal Association: GB107\r\nStatistic\r\nP-Value\r\nDF\r\nMethod\r\n223.1831\r\n2.3e-42\r\n10\r\nPearson’s Chi-squared test\r\nTable 1: Strong Inheritance Families: GB137\r\n\r\nhead(strong_inheritance)\r\nAbkhaz-Adyge\r\n1\r\nAinu\r\n1\r\nAmto-Musan\r\n1\r\nArawan\r\n1\r\nBarbacoan\r\n1\r\nBogia\r\n1\r\nTable 1: Strong Inheritance Families: GB107\r\n\r\nhead(strong_inheritance2)\r\nAbkhaz-Adyge\r\n1\r\nAinu\r\n1\r\nAmto-Musan\r\n1\r\nAngan\r\n1\r\nAraucanian\r\n1\r\nArawan\r\n1\r\nTable 1: Correlation Test: GB137 vs. GB107\r\nstatistic\r\np.value\r\nparameter\r\nmethod\r\n811.9694\r\n0.0004998\r\nNA\r\nPearson’s Chi-squared test with simulated p-value\r\n(based on 2000 replicates)\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\nTable 2: Areal Association: 113A vs. Macroarea\r\nStatistic\r\nP-Value\r\nDF\r\nMethod\r\n17.78634\r\n0.065967\r\nNA\r\nPearson’s Chi-squared test with simulated p-value\r\n(based on 2000 replicates)\r\n\r\n\r\n\r\nTable 2: Areal Association: 1143G vs. Macroarea\r\nStatistic\r\nP-Value\r\nDF\r\nMethod\r\n24.72971\r\n0.0554723\r\nNA\r\nPearson’s Chi-squared test with simulated p-value\r\n(based on 2000 replicates)\r\n\r\n\r\n\r\n\r\n\r\nTable 3: Contingency Table: WALS 113A vs WALS 143G\r\n1\r\n4\r\n0\r\n112\r\n1\r\n49\r\n1\r\n125\r\nTable 3: Chi-squared Test Results: Correlation between Strategy and Order\r\nStatistic\r\nP-Value\r\nDF\r\nMethod\r\n2.037003\r\n0.6681659\r\nNA\r\nPearson’s Chi-squared test with simulated p-value\r\n(based on 2000 replicates)\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2026-03-27T21:52:29+00:00",
+    "input_file": "showcase1.knit.md"
+  },
+  {
     "path": "posts/2026-02-13-showcase/",
     "title": "Political A/B Testing: Homepage Conversion Analysis",
     "description": "An analysis of simulated A/B test data for a political party's website, comparing Linear Probability and Logistic Regression Models.",
