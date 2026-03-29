@@ -200,7 +200,7 @@ tidy(wals_corr) %>%
 # Displaying Chi-squared
 ```
 
-```{r}
+```{r, preview=TRUE}
 wals_counts <- as.data.frame(table(wals_wide_clean $ Value.113A,
                                    wals_wide_clean $ Value.143G))
 colnames(wals_counts) <- c("Strategy", "Order", "Frequency")
