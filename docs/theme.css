@@ -1,0 +1,94 @@
+
+/* base variables */
+
+/* Edit the CSS properties in this file to create a custom
+   Distill theme. Only edit values in the right column
+   for each row; values shown are the CSS defaults.
+   To return any property to the default,
+   you may set its value to: unset
+   All rows must end with a semi-colon.                      */
+
+/* Optional: embed custom fonts here with `@import`          */
+/* This must remain at the top of this file.                 */
+
+
+
+html {
+  /*-- Main background --*/
+  background-color: #1a1a1a;
+  
+  /*-- Main font sizes --*/
+  --title-size:      50px;
+  --body-size:       1.06rem;
+  --code-size:       14px;
+  --aside-size:      12px;
+  --fig-cap-size:    13px;
+  /*-- Main font colors --*/
+  --title-color:     #e0e0e0;
+  --header-color:    #9fbf9f;
+  --body-color:      #d1d1d1;
+  --aside-color:     #888888;
+  --fig-cap-color:   #888888;
+  /*-- Specify custom fonts ~~~ must be imported above   --*/
+  --heading-font:    'Mostserrat', sans-serif;
+  --mono-font:       monospace;
+  --body-font:       'Lora', serif;
+  --navbar-font:     'Montserrat', sans-serif;  /* websites + blogs only */
+}
+
+/*-- ARTICLE METADATA --*/
+d-byline {
+  --heading-size:    0.6rem;
+  --heading-color:   #6b8e6b;
+  --body-size:       0.8rem;
+  --body-color:      #bbbbbb;
+}
+
+/*-- ARTICLE TABLE OF CONTENTS --*/
+.d-contents {
+  --heading-size:    18px;
+  --contents-size:   13px;
+}
+
+/*-- ARTICLE APPENDIX --*/
+d-appendix {
+  --heading-size:    15px;
+  --heading-color:   #6b8e6b;
+  --text-size:       0.8em;
+  --text-color:      #888888;
+}
+
+/*-- WEBSITE HEADER + FOOTER --*/
+/* These properties only apply to Distill sites and blogs  */
+
+.distill-site-header {
+  --title-size:       18px;
+  --text-color:       #d1d1d1;
+  --text-size:        15px;
+  --hover-color:      #9fbf9f;
+  --bkgd-color:       #0f1a0f;
+}
+
+.distill-site-footer {
+  --text-color:       #888888;
+  --text-size:        15px;
+  --hover-color:      #9fbf9f;
+  --bkgd-color:       #0f1a0f;
+}
+
+/*-- Additional custom styles --*/
+/* Add any additional CSS rules below                      */
+
+a {
+  color: #9fbf9f;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #c2dbc2;
+}
+
+d-code {
+  background: #252525; !important;
+}
+
