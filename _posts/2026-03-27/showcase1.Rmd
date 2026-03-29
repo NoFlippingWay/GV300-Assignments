@@ -91,16 +91,25 @@ as.data.frame(head(strong_inheritance2)) %>%
                col.names = c("Family Name", "Proportion"))
 # Investigating genealogical stability
 ```
+
 # 1.3 Feature Co-occurrence and Correlation
+
 While the previous section focus on the external drivers of negation of geography and ancestry, it is also critical to examine the internal relationship in between these markers. This section investigates whether the use of affixal negation (GB107) and clause-final negation (GB137) are independent structural choices or if they exhibit a significant typological correlation.
+
 The following Chi-squared test evaluates this dependency. A significant result would suggest that the presence of one negation strategy may historically or structurally constrain the development of the other, thus suggesting a deeper cross-linguistic pattern in how negation is encoded.
+
 ```{r}
 feature_comp <- table(Gb_wide $ Value.GB107, Gb_wide $ Value.GB137)
 feature_test <- chisq.test(feature_comp, simulate.p.value = TRUE)
 tidy(feature_test) %>%
-  knitr::kable(caption = "Correlation Test: GB137 vs. GB107" )
+  knitr::kable(caption = "Correlation Test: GB137 vs. GB107",
+               col.names = c("Statistic", "P-value", "Parameter", "Method"))
 # Testing for correlation between features
 ```
+
+# 1.4 Visualising Regional Variation
+
+While Chi-squared tests provide statistical evidence for areal and genealogical trends, visualising these distributions may reveal a potential geographical 'shape' of negation. In this section I contrast clause-final negation (GB137) with affixal negation (GB107) and through plotting these as proportional bar charts across macroareas, it may be possible to determine if certain regions favour specific structural blueprints for negation.
 
 ```{r}
 plotGB137 <- na.omit(Gb_wide[, c("Macroarea.GB137", "Value.GB137")])
@@ -146,6 +155,9 @@ combined_plot <- p1 / p2 +
 combined_plot
 # Combining plots using patchwork
 ```
+
+The resulting visualisations highlight a clear divergence in how these two strategies are distributed globally. Clause-final negation exhibits significant peaks in specific macroareas like South America and Papuanesia, perhaps suggesting that this syntactic features may spread through language contact. However, affixal negation shows a more balanced, presence across most macroareas. This suggests that morphological negation is often a deeply embedded trait that is less prone to being lost or gained through geographical proximity and therefore more likely to be inherited vertically through language families.
+
 ---
 # Section 2: WALS Structural Correlation
 
@@ -195,11 +207,10 @@ combined_wals_table <- table(wals_wide_clean $Value.113A, wals_wide_clean $ Valu
 
 wals_corr <- chisq.test(combined_wals_table, simulate.p.value = TRUE)
 # Performing Chi-squared
-```
 
-```{r}
 knitr::kable(combined_wals_table,
-             caption = "Contingency Table: WALS 113A vs WALS 143G")
+             caption = "Contingency Table: WALS 113A vs WALS 143G",
+             col.names = c("V-Neg", "Neg-V"))
 # Displaying table
 
 tidy(wals_corr) %>%
@@ -208,6 +219,16 @@ tidy(wals_corr) %>%
     col.names = c("Statistic", "P-Value", "DF", "Method"))
 # Displaying Chi-squared
 ```
+
+The above Chi-squared results for the WALS data 113A and 143G reveals no statistically significant correlations. Unlike the regional clustering observed in the Grambank data, these results suggest that the choice between symmetric and asymmetric negation strategies is not strictly dictated by basic word orders or the position of the negative element.
+
+The independence may indicate that these structural dimensions evolve through different typological pressures. As while a language may shift its negative position due to contact or changes in word-order, the internal symmetry of its negation system appears  to remain as a distinct and independent structural trait.
+
+# 2.2 Visualising Proportional Trends
+
+While the previous Chi-squared test confirms a lack of statistical correlation, the following proportional plot allows for the inspection of how clausal symmetry (113A) is distributed across different syntactic positions (143G). Through this standardisation of frequencies to 100%, the relative prevalence of symmetric versus asymmetric negation strategies for both V-Neg and Neg-V word orders become observable.
+
+The resulting  distribution illustrates the structural diversity of negation, as it demonstrates that neither syntactic position (113A or 143G) constrains a language into a specific morphological pathway. Noticeably, however, the data does reveal that symmetric strategies are only present within the Neg-V category, therefore potentially suggesting that these features are generally governed by independent evolutionary typological pressures, despite certain morphological configurations that may be restricted to specific word-order environments.
 
 ```{r, preview=TRUE}
 wals_counts <- as.data.frame(table(wals_wide_clean $ Value.113A,
