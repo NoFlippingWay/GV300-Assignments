@@ -1,7 +1,7 @@
 ---
-title: "About this site"
+title: "About"
 description: |
-  Some additional details about the website
+  This website has been created as a part of GV300 in order to complete my Q-Step award. It aims to showcase some examples of work completed within the GV300 module as well as data analysis completed as a part of my BA Degree in Linguistics.
 ---
 
 ```{r setup, include=FALSE}
