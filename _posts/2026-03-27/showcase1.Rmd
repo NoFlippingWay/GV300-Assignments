@@ -255,9 +255,10 @@ ggplot(wals_counts, aes(x = Order, y = Frequency, fill = Strategy)) +
 # Creating bar graph
 ```
 
+To synthesize the previous findings, I plotted the global distributions of WALS 113A (Clausal symmetry), alongside Grambank GB137 (Clause-final negation). Mapping these features allows me to move beyond abstract percentages and observe the actual geographic densities of negation strategies. These comparison visualisations highlight how specific structural choices cluster in particular regions, thus providing a final layer of evidence for the areal and genealogical trends discussed throughout this analysis.
+
 ```{r}
 world_map <- map_data("world")
-# retrieving map coordinates
 
 WALS_map <- ggplot() +
   geom_polygon(data = world_map, aes(x = long, y = lat, group = group),
@@ -270,26 +271,24 @@ WALS_map <- ggplot() +
   theme_void() +
   theme(legend.position = "none") +
   labs(title = "WALS 113A: Symmetric and Asymmetric Negation")
-# Creating WALS 113A map
 
 Gb_map <- ggplot() +
   geom_polygon(data = world_map, aes(x = long, y = lat, group = group),
                fill = "grey95", colour = "grey80", linewidth = 0.1) +
   geom_point(data = Gb_wide,
-             aes(x = Longitude, y = Latitude, colour = factor(Value.GB137,exclude = NULL)),
+             aes(x = Longitude, y = Latitude, colour = factor(Value.GB137, exclude = NULL)),
              shape = 16, size = 0.8, alpha = 0.7) +
   scale_shape_identity() +
-  scale_colour_manual(values = c("#CC79A7", "#009E73","#F0E442", "black"),
+  scale_colour_manual(values = c("#CC79A7", "#009E73", "#F0E442", "black"),
                       na.value = "black",
                       labels = c("No", "Yes", "Not Known", "NAs")) +
   coord_fixed(1.3) +
   theme_void() +
   theme(legend.position = "none") +
   labs(title = "Grambank GB137: Clause-Final Negation")
-# Creating Grambank GB137 map
 
-
-comp_map <- WALS_map / Gb_map 
+comp_map <- WALS_map / Gb_map
 comp_map
-# Displaying maps with patchwork
 ```
+
+The comparison between the WALS and Grambank maps illustrates the complementary nature of each dataset. While the WALS map (above) captures a broad typological overview of clausal symmetry with a focus on categorical variety, the Grambank map (below) provides a more dense, binary snapshot of syntactic positioning. In combination, they reveal that certain regions are hot-spots for diverse negation strategies. These maps confirm that while negation is a universal linguistic requirement, its structural implementation is deeply tied to the geographic and historical context of the world's language families.
