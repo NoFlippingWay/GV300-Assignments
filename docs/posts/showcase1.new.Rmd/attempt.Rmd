@@ -1,4 +1,4 @@
----
+--
 title: "Global Negation Strategies: A Comparative Analysis"
 description: |
   An  investigation into the distribution of negation strategies using Grambank and WALS datasets.
@@ -254,7 +254,7 @@ ggplot(wals_counts, aes(x = Order, y = Frequency, fill = Strategy)) +
   theme_minimal()
 # Creating bar graph
 ```
-
+---
 # Section 3: Comparing WALS and Grambank Datasets
 
 To synthesize the previous findings, I plotted the global distributions of WALS 113A (Clausal symmetry), alongside Grambank GB137 (Clause-final negation). Mapping these features allows me to move beyond abstract percentages and observe the actual geographic densities of negation strategies. These comparison visualisations highlight how specific structural choices cluster in particular regions, thus providing a final layer of evidence for the areal and genealogical trends discussed throughout this analysis.
@@ -294,8 +294,3 @@ comp_map
 ```
 
 The comparison between the WALS and Grambank maps illustrates the complementary nature of each dataset. While the WALS map (above) captures a broad typological overview of clausal symmetry with a focus on categorical variety, the Grambank map (below) provides a more dense, binary snapshot of syntactic positioning. In combination, they reveal that certain regions are hot-spots for diverse negation strategies. These maps confirm that while negation is a universal linguistic requirement, its structural implementation is deeply tied to the geographic and historical context of the world's language families.
-
-
-*NOTES:  
-  - Data retrieved from WALS and Grambank March 20, 2026  
-  - Colour-blind accessible colours used (Okabe-Ito)*
