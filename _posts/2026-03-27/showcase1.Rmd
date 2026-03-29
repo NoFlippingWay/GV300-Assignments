@@ -79,16 +79,22 @@ family_props <- prop.table(family_table, margin = 2)
 
 strong_inheritance <- family_props["1", family_props["1", ] == 1.0]
 as.data.frame(head(strong_inheritance)) %>%
-  knitr::kable(caption = "Strong Inheritance Families: GB137")
+  knitr::kable(caption = "Strong Inheritance Families: GB137",
+               col.names = c("Family Name", "Proportion"))
 
 family_table2 <- table(Gb_wide $ Value.GB107, Gb_wide $ Family_name.GB107)
 family_props2 <- prop.table(family_table2, margin = 2)
 
 strong_inheritance2 <- family_props2["1", family_props2["1", ] == 1.0]
 as.data.frame(head(strong_inheritance2)) %>%
-  knitr::kable(caption = "Strong Inheritance Families: GB107")
+  knitr::kable(caption = "Strong Inheritance Families: GB107",
+               col.names = c("Family Name", "Proportion"))
 # Investigating genealogical stability
-
+```
+# 1.3 Feature Co-occurrence and Correlation
+While the previous section focus on the external drivers of negation of geography and ancestry, it is also critical to examine the internal relationship in between these markers. This section investigates whether the use of affixal negation (GB107) and clause-final negation (GB137) are independent structural choices or if they exhibit a significant typological correlation.
+The following Chi-squared test evaluates this dependency. A significant result would suggest that the presence of one negation strategy may historically or structurally constrain the development of the other, thus suggesting a deeper cross-linguistic pattern in how negation is encoded.
+```{r}
 feature_comp <- table(Gb_wide $ Value.GB107, Gb_wide $ Value.GB137)
 feature_test <- chisq.test(feature_comp, simulate.p.value = TRUE)
 tidy(feature_test) %>%
@@ -107,7 +113,8 @@ p1 <- ggplot(plotGB137, aes(x = Macroarea.GB137, fill = as.factor(Value.GB137)))
   scale_fill_manual(values = c("#56B4E9", "#0072B2"),
                     labels = c("Absent", "Present")) +
   labs(title = "Clause-Final Negation (GB137)",
-       subtitle = "Syntactic Position: High regional variation suggests areal diffusion",
+       subtitle = "Syntactic Position:
+       High regional variation suggests areal diffusion",
        y = "Percent of Languages", x = NULL, fill = "Presence") +
   theme_minimal(base_size = 11) +
   theme(legend.title = element_blank()) +
@@ -124,7 +131,8 @@ p2 <- ggplot(plotGB107, aes(x = Macroarea.GB107, fill = as.factor(Value.GB107)))
   scale_fill_manual(values = c("#E69F00", "#D55E00"),
                     labels = c("Absent", "Present")) +
   labs(title = "Affixal/Clitic Negation (GB107)",
-       subtitle = "Morphological Strategy: Broader distribution suggests genealogical stability",
+       subtitle = "Morphological Strategy:
+       Broader distribution suggests genealogical stability",
        y = "Percent of Languages", x = NULL, fill = "Presence") +
   theme_minimal(base_size = 11) +
   theme(legend.title = element_blank()) +
@@ -138,9 +146,10 @@ combined_plot <- p1 / p2 +
 combined_plot
 # Combining plots using patchwork
 ```
+---
 # Section 2: WALS Structural Correlation
 
-In contrast to the binary granularity of Grambank, the WALS dataset allows for the investigation into hte dependency between clausal symmetry (113A) and syntactic Position (143G).
+In contrast to the binary granularity of Grambank, the WALS dataset allows for the investigation into the dependency between clausal symmetry (113A) and syntactic Position (143G).
 
 ```{r}
 wals_full <- merge(wals_values, wals_languages,
