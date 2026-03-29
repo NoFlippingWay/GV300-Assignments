@@ -2,15 +2,6 @@
 name: "."
 title: "Holly Lloyd"
 site: distill::distill_website
-links:
-  - label: LinkedIn
-    url: "https://linkedin.com/"
-  - label: Twitter
-    url: "https://twitter.com/"
-  - label: GitHub
-    url: "https://github.com/"
-  - label: Email
-    url: "mailto:email@email.com"
 output:
   postcards::jolla
 ---
