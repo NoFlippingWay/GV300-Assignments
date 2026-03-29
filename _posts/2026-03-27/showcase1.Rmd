@@ -1,7 +1,8 @@
 ---
 title: "Global Negation Strategies: A Comparative Analysis"
 description: |
-  An  investigation into the distribution of negation strategies using Grambank and WALS datasets.
+  An investigation into the distribution of negation strategies using Grambank and WALS datasets.
+preview: showcase1_files/figure-html/unnamed-chunk-1-1.png
 author:
   - name: Holly Lloyd
 date: 2026-03-27
