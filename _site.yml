@@ -1,8 +1,9 @@
 name: "distill"
-title: "GV300 "
+title: "GV300"
 description: |
   GV300 
 output_dir: "docs"
+theme: theme.css 
 navbar:
   right:
     - text: "Home"
